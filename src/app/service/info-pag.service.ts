@@ -10,16 +10,31 @@ export class InfoPagService {
   info:InfoPag={};
   loadJSON=false;
 
-  constructor(private http: HttpClient) { 
-    console.log("info desde el service");
+  team:any[]=[]
 
-    // READ  JSON File
+  constructor(private http: HttpClient) {
+
+    this.loadInfo();
+    this.loadTeam();
+   }
+
+
+   // READ  JSON File
+  private loadInfo(){
     this.http.get('assets/data/data-pag.json')
                   .subscribe((resp:InfoPag) =>{
                     this.loadJSON=true;
                     this.info=resp;
-                    console.log(resp);
-                 
+                    // console.log(resp);                
                   });
+  }
+
+  //CALL FIREBASE TEAM
+  private loadTeam(){
+    this.http.get('https://desing-portfolio-default-rtdb.europe-west1.firebasedatabase.app/team.json')
+                  .subscribe((resp:any) =>{
+      this.team= resp;
+      // console.log(resp);
+    });
   }
 }
