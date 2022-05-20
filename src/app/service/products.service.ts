@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { timeout } from 'rxjs';
 import { ProductsInterface } from '../interfaces/products.interface';
 
 
@@ -22,7 +23,9 @@ export class ProductsService {
                            .subscribe((resp: any)=>{
                               console.log(resp);
                               this.products=resp;
-                              this.loadingProducts=false
+                              setTimeout(() => {
+                                this.loadingProducts=false;
+                              },1000 );
                            });
   }
 }
